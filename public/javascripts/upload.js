@@ -23,7 +23,12 @@ $('#upload').on('change', function(){
       processData: false,
       contentType: false,
       success: function(data){
-          console.log('upload successful!\n' + data);
+          $('.panel-body').fadeOut();
+          $('input.link').val(window.location.host + '/' + data);
+          
+          setTimeout(function() {
+            $('.share-link').fadeIn();
+          }, 400);
       },
       xhr: function() {
         var xhr = new XMLHttpRequest();

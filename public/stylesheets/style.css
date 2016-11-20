@@ -59,6 +59,10 @@ h2 {
   background-color: #ffeadb;
 }
 
+.share-link {
+  display: none;
+}
+
 .main-container {
   width: 100%;
 }

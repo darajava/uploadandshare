@@ -8,6 +8,8 @@ mongoose.connect('mongodb://localhost:27017/uploadandshare');
 
 router.post('/', function(req, res){
 
+  var hashmd5;
+
   // create an incoming form object
   var form = new formidable.IncomingForm();
 
@@ -29,11 +31,17 @@ router.post('/', function(req, res){
       filepath: String
     });
 
-    var File = mongoose.model('File', fileSchema);
+    if (mongoose.models.File) {
+      var File = mongoose.model('File');
+    } else {
+      var File = mongoose.model('File', fileSchema);
+    }
+
+    hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex");
 
     var fileObj = new File({
       name: file.name,
-      hash: require('crypto').createHash('md5').update(Math.random() + 'omgsosaltylol').digest("hex"),
+      hash: hashmd5,
       filepath: path.join(form.uploadDir, file.name)
     });
 
@@ -49,7 +57,7 @@ router.post('/', function(req, res){
 
   // once all the files have been uploaded, send a response to the client
   form.on('end', function() {
-    res.end('success');
+    res.send(hashmd5);
   });
 
   // parse the incoming request containing the form data
