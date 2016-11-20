@@ -7,15 +7,17 @@ html
     title Upload a file
     link(href='https://fonts.googleapis.com/css?family=Raleway', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
-    link(href='stylesheets/style.css', rel='stylesheet')
+    link(href='/stylesheets/style.css', rel='stylesheet')
   body
     .container
       .row
         .col-xs-12
           .panel.panel-default
             .panel-body
-              button.btn.btn-lg.upload-btn(type='button') Download File
-              p #{hash}
+              h2 Click to download file
+              h4 Once you download this file, it will be permanantly deleted
+              button.btn.btn-lg.download-btn(type='button') Download File
+    input(type='hidden', value='#{hash}', id='hash')
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
-    script(src='javascripts/download.js')
+    script(src='/javascripts/download.js')

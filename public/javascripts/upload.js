@@ -24,7 +24,7 @@ $('#upload').on('change', function(){
       contentType: false,
       success: function(data){
           $('.panel-body').fadeOut();
-          $('input.link').val(window.location.host + '/' + data);
+          $('input.link').val(window.location.host + '/d/' + data);
           
           setTimeout(function() {
             $('.share-link').fadeIn();

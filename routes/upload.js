@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost:27017/uploadandshare');
 
 router.post('/', function(req, res){
 
-  var hashmd5;
+  var hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex").substring(0, 10);
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -16,9 +16,9 @@ router.post('/', function(req, res){
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = false;
 
-  // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '../uploads');
-
+  fs.mkdir(path.join(__dirname, '../uploads/' + hashmd5));
+  form.uploadDir = path.join(__dirname, '../uploads/' + hashmd5);
+  
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
@@ -28,7 +28,6 @@ router.post('/', function(req, res){
       name: String,
       hash: String,
       time: {type: Date, default: Date.now},
-      filepath: String
     });
 
     if (mongoose.models.File) {
@@ -37,7 +36,6 @@ router.post('/', function(req, res){
       var File = mongoose.model('File', fileSchema);
     }
 
-    hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex");
 
     var fileObj = new File({
       name: file.name,
