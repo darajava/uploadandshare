@@ -4,7 +4,6 @@ var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/uploadandshare');
 
 router.post('/', function(req, res){
 
@@ -24,18 +23,11 @@ router.post('/', function(req, res){
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, file.name));
   
-    var fileSchema = mongoose.Schema({
-      name: String,
-      hash: String,
-      time: {type: Date, default: Date.now},
-    });
-
     if (mongoose.models.File) {
       var File = mongoose.model('File');
     } else {
       var File = mongoose.model('File', fileSchema);
     }
-
 
     var fileObj = new File({
       name: file.name,
