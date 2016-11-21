@@ -14,9 +14,14 @@ html
         .col-xs-12
           .panel.panel-default
             .panel-body
-              h2 Click to download file
-              h4 Once you download this file, it will be permanently deleted
-              button.btn.btn-lg.download-btn(type='button') Download File
+              .download
+                h2 Click to download file
+                h4 Once you download this file, it will be permanently deleted
+                button.btn.btn-lg.download-btn(type='button') Download File
+              .downloading
+                h2 Downloading...
+                h4 Your file is downloading - in the meantime why not
+                button.btn.btn-lg.upload-btn(type='button') upload a file?
     input(type='hidden', value='#{hash}', id='hash')
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')

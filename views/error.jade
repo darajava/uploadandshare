@@ -1,3 +1,24 @@
-block content
-  h1= message
-  pre #{error}
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Upload a file
+    link(href='https://fonts.googleapis.com/css?family=Varela+Round', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    link(href='/stylesheets/style.css', rel='stylesheet')
+  body
+    .container
+      .row
+        .col-xs-12
+          .panel.panel-default
+            .panel-body
+              h2 No file found!
+              h4 Maybe it was already downloaded... or maybe you're hacking ;)
+              button.btn.btn-lg.upload-btn(type='button') Go back home
+    input#upload(type='file', name='uploads[]')
+    br
+    script(src='https://code.jquery.com/jquery-2.2.0.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    script(src='/javascripts/error.js')

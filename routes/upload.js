@@ -5,6 +5,8 @@ var formidable = require('formidable');
 var fs = require('fs');
 var mongoose = require('mongoose');
 
+var File = require('../models/file').File;
+
 router.post('/', function(req, res){
 
   var hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex").substring(0, 10);
@@ -23,12 +25,6 @@ router.post('/', function(req, res){
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, file.name));
   
-    if (mongoose.models.File) {
-      var File = mongoose.model('File');
-    } else {
-      var File = mongoose.model('File', fileSchema);
-    }
-
     var fileObj = new File({
       name: file.name,
       hash: hashmd5,

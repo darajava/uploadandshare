@@ -29,8 +29,8 @@ router.get('/:hash/:name', function(req, res){
 
   fs.readFile('/home/darajava/uploadandshare.link/uploads/' + req.params.hash + '/' + req.params.name, (err, data) => {
     if (err) {
-      console.log('i am error');
-      res.render('error', {error: 'no file found'});
+      res.status(404);
+      res.send('ok');
       return;
     } else {
       res.set('Content-Type', 'application/octet-stream');

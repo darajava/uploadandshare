@@ -15,15 +15,19 @@ html
           .panel.panel-default
             .share-link
               h2 Share this link
+              h4 Note that once this file is downloaded, it will be deleted forever
               input.link
+              button.btn.clip-btn(data-clipboard-target='.link')
+                img.clip(src='images/clippy.svg', alt='Copy to clipboard')
+                span.copied Copied!
             .panel-body
-              h2 File Uploader
-              h4 Upload your files guv'na!
+              h2 Simple file uploader
+              h4 One-time file sharer. Once downloaded, it will be deleted forever
               .progress
                 .progress-bar(role='progressbar')
               button.btn.btn-lg.upload-btn(type='button') Upload File
     input#upload(type='file', name='uploads[]')
-    br
+    script(src="https://cdn.jsdelivr.net/clipboard.js/1.5.13/clipboard.min.js")
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
     script(src='javascripts/upload.js')

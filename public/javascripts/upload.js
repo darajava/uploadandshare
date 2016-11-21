@@ -1,6 +1,19 @@
 $('.upload-btn').on('click', function (){
-    $('#upload').click();
-    $('.progress-bar').width('0%');
+  $('#upload').click();
+  $('.progress-bar').width('0%');
+});
+
+var clipboard = new Clipboard('.btn.clip-btn');
+
+clipboard.on('success', function(e) {
+  $('.copied').fadeIn();
+  setTimeout(function() {
+    $('.copied').fadeOut();
+  }, 2000);
+});
+
+$(".link").on("click", function () {
+   $(this).select();
 });
 
 $('#upload').on('change', function(){
@@ -34,6 +47,7 @@ $('#upload').on('change', function(){
         var xhr = new XMLHttpRequest();
 
         xhr.upload.addEventListener('progress', function(evt) {
+          $('.upload-btn').text('Uploading...');
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
             percentComplete = parseInt(percentComplete * 100);
