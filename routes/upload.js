@@ -9,7 +9,7 @@ var File = require('../models/file').File;
 
 router.post('/', function(req, res){
 
-  var hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex").substring(0, 10);
+  var hashmd5 = require('crypto').createHash('md5').update(Math.random() + 'sosaltylol').digest("hex").substring(5, 15);
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -24,12 +24,20 @@ router.post('/', function(req, res){
   // rename it to it's orignal name
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, file.name));
-  
+ 
+    var ipAddr = req.headers['x-forwarded-for'] || 
+      req.connection.remoteAddress || 
+      req.socket.remoteAddress ||
+      req.connection.socket.remoteAddress;
+ 
     var fileObj = new File({
       name: file.name,
       hash: hashmd5,
-      filepath: path.join(form.uploadDir, file.name)
+      filepath: path.join(form.uploadDir, file.name),
+      ip: ipAddr
     });
+
+console.log(fileObj);
 
     fileObj.save(function (err, thisBlob) {
       if (err) return console.error(err);
@@ -48,10 +56,6 @@ router.post('/', function(req, res){
 
   // parse the incoming request containing the form data
   form.parse(req);
-
-  var db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-  
 });
 
 module.exports = router;

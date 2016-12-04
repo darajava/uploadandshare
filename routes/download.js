@@ -7,19 +7,26 @@ var mongoose = require('mongoose');
 var File = require('../models/file').File;
 
 router.get('/:id', function(req, res){
-  console.log(req.params.id);
   File.findOne({ 'hash': req.params.id }, 'hash name', function (err, file) {
-    if (err) return handleError(err);
-    fs.stat('/home/darajava/uploadandshare.link/uploads/' + file.hash + '/' + file.name, function(err, stat) {
-      if(err == null) {
-        res.render('download', { hash: req.params.id });
-      } else if(err.code == 'ENOENT') {
-        // file does not exist
-        res.render('error', { error: 'no file here' });
-      } else {
-        res.render('download', { hash: req.params.id });
-      }
-    });
+    if (err) {
+      res.render('error', { error: 'no file here' });
+      return;
+    }
+
+    if (file) {
+      fs.stat('/home/darajava/uploadandshare.link/uploads/' + file.hash + '/' + file.name, function(err, stat) {
+        if(err == null) {
+          res.render('download', { hash: req.params.id });
+        } else if(err.code == 'ENOENT') {
+          // file does not exist
+          res.render('error', { error: 'no file here' });
+        } else {
+          res.render('download', { hash: req.params.id });
+        }
+      });
+    } else {
+      res.render('error', { error: 'no file here' });
+    }
   });
 });
 
